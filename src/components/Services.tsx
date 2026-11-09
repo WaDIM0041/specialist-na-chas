@@ -75,7 +75,7 @@ export default function Services() {
           index="01"
           kicker="Рубрики услуг"
           title="Чем я могу быть полезен"
-          note="Четыре направления — полностью удалённо: присылаете исходник, получаете готовый результат. Ниже — два формата с выездом по городу."
+          note="Удалённые задачи, проектные работы и помощь с выездом по договорённости."
         />
 
         {/* четыре удалённые карточки */}
@@ -118,6 +118,17 @@ export default function Services() {
             </Reveal>
           ))}
         </ul>
+
+        <Reveal delay={120} className="mt-10 md:mt-12">
+          <article className="border border-line bg-ink-900/60 p-5 lg:p-6">
+            <h3 className="font-display text-lg font-semibold text-paper">Фасадные системы и структурное остекление</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-fog-300">
+              Разработка фасадных систем и структурного остекления с нуля до сдачи объекта.
+              Организация работ, руководство монтажниками и общение с заказчиком на всех этапах.
+              Формат участия и выезд на объект обсуждаются отдельно.
+            </p>
+          </article>
+        </Reveal>
 
         {/* два формата с выездом */}
         <Reveal delay={120} className="mt-10 md:mt-12">
