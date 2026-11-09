@@ -49,7 +49,7 @@ export default function Hero() {
           </Reveal>
 
           <Reveal delay={90}>
-            <h1 className="mt-6 font-display text-[2.5rem] font-bold leading-[1.02] tracking-tight text-paper sm:text-6xl xl:text-[4.6rem]">
+            <h1 className="mt-6 font-display text-[2.5rem] font-bold leading-[1.02] tracking-tight text-paper sm:text-6xl lg:pr-28 lg:text-[3rem] xl:text-[3.25rem]">
               Специалист
               <br />
               <span
@@ -68,7 +68,7 @@ export default function Hero() {
           </div>
 
           <Reveal delay={170}>
-            <p className="mt-5 max-w-xl text-lg font-semibold text-fog-300 sm:text-xl">
+            <p className="mt-5 max-w-xl text-lg font-semibold text-fog-300 sm:text-xl lg:pr-28">
               Разовые задачи и регулярная помощь удалённо
             </p>
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-fog-400 sm:text-base">

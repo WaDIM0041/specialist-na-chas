@@ -41,7 +41,7 @@
   .portfolio-cube { position: absolute; top: 105px; right: 12%; width: 135px; height: 135px; margin: 0; }
   .portfolio-cube-form { scale: 1.35; }
 }
-@media (min-width: 1024px) { .portfolio-cube { top: -15px; right: 0; } }
+@media (min-width: 1024px) { .portfolio-cube { top: 70px; right: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .portfolio-cube, .portfolio-cube-form { animation: none; }
   .portfolio-cube-form { transform: rotateX(-20deg) rotateY(30deg); }
