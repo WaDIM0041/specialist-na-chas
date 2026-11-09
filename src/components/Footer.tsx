@@ -62,8 +62,10 @@ export default function Footer() {
           aria-label="Специалист на час"
           className="block h-auto w-full overflow-visible text-paper"
         >
-          <text x="0" y="91" textLength="1200" lengthAdjust="spacingAndGlyphs" fill="none" stroke="#ffffff" strokeWidth="1.5" className="font-display" fontSize="100" fontWeight="700">
-            СПЕЦИАЛИСТ НА ЧАС
+          <text x="0" y="91" textLength="1200" lengthAdjust="spacingAndGlyphs" fill="none" stroke="#ffffff" strokeWidth="1.5" className="font-display" fontSize="100" fontWeight="700" xmlSpace="preserve">
+            {Array.from("СПЕЦИАЛИСТ НА ЧАС").map((letter, index) => (
+              <tspan key={index} className="footer-flip-letter" style={{ animationDelay: `${index * 0.12}s` }}>{letter}</tspan>
+            ))}
           </text>
         </svg>
         <div className="flex flex-col items-center gap-3 border-t border-line-soft py-5 text-center text-sm text-fog-300">
