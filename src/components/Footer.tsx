@@ -62,14 +62,29 @@ export default function Footer() {
           aria-label="Специалист на час"
           className="block h-auto w-full overflow-visible text-paper"
         >
-          <text x="0" y="91" textLength="1200" lengthAdjust="spacingAndGlyphs" fill="currentColor" className="font-display" fontSize="100" fontWeight="700">
+          <text x="0" y="91" textLength="1200" lengthAdjust="spacingAndGlyphs" fill="none" stroke="#ffffff" strokeWidth="1.5" className="font-display" fontSize="100" fontWeight="700">
             СПЕЦИАЛИСТ НА ЧАС
           </text>
         </svg>
-        <div className="flex justify-center border-t border-line-soft py-5">
-          <a href="https://annakam.ru/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 text-sm text-fog-300 transition-colors hover:text-accent-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400">
-            <span aria-hidden="true" className="grid h-9 w-9 place-items-center border border-accent-400/60 font-display text-sm font-bold text-accent-400">AK</span>
-            <span>Создание сайтов · Студия AK</span>
+        <div className="flex flex-col items-center gap-3 border-t border-line-soft py-5 text-center text-sm text-fog-300">
+          <p>Сайт создан «Специалистом на час» — от идеи и разработки до запуска.</p>
+          <a href="https://annakam.ru/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 transition-colors hover:text-accent-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400">
+            <svg viewBox="0 0 100 100" className="h-10 w-10 shrink-0" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="ak-footer-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#00ff88" />
+                  <stop offset="50%" stopColor="#00ccff" />
+                  <stop offset="100%" stopColor="#c084fc" />
+                </linearGradient>
+              </defs>
+              <path d="M50 5 L90 27.5 L90 72.5 L50 95 L10 72.5 L10 27.5 Z" stroke="url(#ak-footer-gradient)" strokeWidth="1.5" />
+              <path d="M10 27.5 L50 50 L90 27.5 M50 50 V95" stroke="url(#ak-footer-gradient)" strokeWidth="1.5" opacity=".7" />
+              <text x="50" y="58" textAnchor="middle" fill="url(#ak-footer-gradient)" fontSize="24" fontFamily="monospace" fontWeight="bold">AK</text>
+              <circle cx="50" cy="5" r="2" fill="#00ff88" />
+              <circle cx="90" cy="27.5" r="1.5" fill="#00ccff" />
+              <circle cx="10" cy="72.5" r="1.5" fill="#c084fc" />
+            </svg>
+            <span>Другие наши проекты — annakam.ru</span>
           </a>
         </div>
       </div>
