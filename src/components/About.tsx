@@ -9,8 +9,7 @@ export default function About() {
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
         <Reveal>
           <figure className="relative border border-line bg-ink-900">
-            <img src="./images/portrait.jpg" alt="Демонстрационный портрет для оформления сайта" className="aspect-[4/5] w-full object-cover" loading="lazy" />
-            <figcaption className="p-3 text-xs text-fog-300">Демонстрационное фото. Здесь появится ваша фотография.</figcaption>
+            <img src="./images/creator-portrait.jpg" alt="Специалист на час за рабочим столом" className="aspect-[4/5] w-full object-cover object-[center_60%]" loading="lazy" />
           </figure>
         </Reveal>
         <Reveal>
