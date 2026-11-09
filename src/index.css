@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+.footer-back-to-top {
+  animation: footer-button-wink 4s ease-in-out infinite;
+}
+@keyframes footer-button-wink {
+  0%, 70%, 100% { border-color: rgba(87, 214, 255, 0.18); color: #b7c7d8; box-shadow: none; }
+  78%, 88% { border-color: rgba(87, 214, 255, 0.95); color: #fff; box-shadow: 0 0 16px rgba(87, 214, 255, 0.3); }
+  83% { border-color: rgba(87, 214, 255, 0.3); color: #b7c7d8; box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-back-to-top { animation: none; }
+}
+.reduced-motion .footer-back-to-top { animation: none !important; }
+
 /* Буквы по очереди переворачиваются между контуром и заливкой. */
 .footer-flip-letter {
   transform-box: fill-box;

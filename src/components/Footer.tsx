@@ -42,7 +42,7 @@ export default function Footer() {
             </p>
             <a
               href="#top"
-              className="mt-6 inline-flex items-center gap-2 border border-line px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-fog-300 transition-colors hover:border-accent-400/60 hover:text-accent-300"
+              className="footer-back-to-top mt-6 inline-flex items-center gap-2 border border-line px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-fog-300 transition-colors hover:border-accent-400/60 hover:text-accent-300"
             >
               <ArrowUp className="h-3.5 w-3.5" />
               Наверх
