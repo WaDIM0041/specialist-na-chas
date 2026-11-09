@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Unbounded", "Manrope", system-ui, sans-serif;
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Палитра «цифровой мастерской»: глубокий синий металл + чертёжный циан + карандашный янтарь */
+  --color-ink-950: #04070d;
+  --color-ink-900: #070d18;
+  --color-ink-850: #0a1322;
+  --color-ink-800: #0d1930;
+  --color-ink-700: #132441;
+
+  --color-line: rgb(148 197 255 / 0.14);
+  --color-line-soft: rgb(148 197 255 / 0.08);
+
+  --color-accent-300: #9ae6ff;
+  --color-accent-400: #57d6ff;
+  --color-accent-500: #2ec3f7;
+  --color-accent-600: #12a8dd;
+
+  --color-demo-400: #ffb454;
+  --color-demo-500: #f59e2c;
+
+  --color-fog-300: #aec4da;
+  --color-fog-400: #8ba2bd;
+  --color-fog-500: #64798f;
+
+  --color-paper: #eaf2fb;
+
+  --shadow-glow: 0 0 42px rgb(46 195 247 / 0.16);
+
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-spin-slow: spinSlow 16s linear infinite;
+  --animate-blink: blink 1.4s steps(2, start) infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgb(87 214 255 / 0.28);
+  color: #fff;
+}
+
+/* ---------- Скроллбар ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink-950);
+}
+::-webkit-scrollbar-thumb {
+  background: #1c3455;
+  border: 2px solid var(--color-ink-950);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a4a74;
+}
+
+/* ---------- Доступность ---------- */
+:focus-visible {
+  outline: 2px solid var(--color-accent-400);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  padding: 10px 18px;
+  background: var(--color-accent-500);
+  color: var(--color-ink-950);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: top 0.2s ease;
+}
+.skip-link:focus-visible {
+  top: 12px;
+}
+
+/* ---------- Ключевые кадры ---------- */
+@keyframes dashIn {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scanX {
+  from {
+    transform: translateX(-120px);
+  }
+  to {
+    transform: translateX(680px);
+  }
+}
+
+@keyframes fillX {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* ---------- Сцена-чертёж ---------- */
+.bp-draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: dashIn 1.05s cubic-bezier(0.55, 0, 0.2, 1) forwards;
+}
+.bp-fade-in {
+  opacity: 0;
+  animation: fadeUp 0.7s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+}
+.bp-scan {
+  animation: scanX 1.15s linear forwards;
+}
+
+/* ---------- Появление при прокрутке ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 0.8, 0.24, 1),
+    transform 0.85s cubic-bezier(0.16, 0.8, 0.24, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Поля формы ---------- */
+input[type="date"],
+select {
+  color-scheme: dark;
+}
+
+/* ---------- Режим уменьшенной анимации ---------- */
+html.reduced-motion,
+html.reduced-motion body {
+  scroll-behavior: auto;
+}
+html.reduced-motion *,
+html.reduced-motion *::before,
+html.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+}
+html.reduced-motion .reveal {
+  opacity: 1;
+  transform: none;
+}
+html.reduced-motion .bp-draw {
+  animation: none;
+  stroke-dashoffset: 0;
+}
+html.reduced-motion .bp-fade-in {
+  animation: none;
+  opacity: 1;
+}
+html.reduced-motion .bp-scan {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.motion-on) .bp-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
