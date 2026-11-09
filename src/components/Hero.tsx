@@ -50,15 +50,14 @@ export default function Hero() {
           </Reveal>
 
           <Reveal delay={90}>
-            <h1 className="mt-6 font-display text-[2.5rem] font-bold leading-[1.02] tracking-tight text-paper sm:text-6xl lg:pr-28 lg:text-[3rem] xl:text-[3.25rem]">
-              Специалист
-              <br />
-              <span
-                className="text-transparent"
-                style={{ WebkitTextStroke: "1.5px rgba(87,214,255,0.85)" }}
-              >
-                на час
-              </span>
+            <h1 aria-label="Специалист на час" className="mt-6 font-display text-[2.5rem] font-bold leading-[1.02] tracking-tight text-paper sm:text-6xl lg:pr-28 lg:text-[3rem] xl:text-[3.25rem]">
+              <span aria-hidden="true">{Array.from("Специалист").map((letter, index) => (
+                <span key={index} className="hero-flip-letter hero-flip-solid" style={{ animationDelay: `${index * 0.12}s` }}>{letter}</span>
+              ))}</span>
+              <br aria-hidden="true" />
+              <span aria-hidden="true">{Array.from("на\u00a0час").map((letter, index) => (
+                <span key={index} className="hero-flip-letter hero-flip-outline" style={{ animationDelay: `${index * 0.12}s` }}>{letter}</span>
+              ))}</span>
             </h1>
           </Reveal>
 
