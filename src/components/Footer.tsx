@@ -62,7 +62,15 @@ export default function Footer() {
           aria-label="Специалист на час"
           className="block h-auto w-full overflow-visible text-paper"
         >
-          <text x="0" y="91" textLength="1200" lengthAdjust="spacingAndGlyphs" fill="none" stroke="#ffffff" strokeWidth="1.5" className="font-display" fontSize="100" fontWeight="700">
+          <defs>
+            <filter id="footer-text-outline" x="-5%" y="-15%" width="110%" height="130%" colorInterpolationFilters="sRGB">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="1.3" result="expanded" />
+              <feComposite in="expanded" in2="SourceAlpha" operator="out" result="outline" />
+              <feFlood floodColor="#ffffff" result="white" />
+              <feComposite in="white" in2="outline" operator="in" />
+            </filter>
+          </defs>
+          <text x="0" y="91" textLength="1200" lengthAdjust="spacingAndGlyphs" fill="#ffffff" filter="url(#footer-text-outline)" className="font-display" fontSize="100" fontWeight="700">
             СПЕЦИАЛИСТ НА ЧАС
           </text>
         </svg>
