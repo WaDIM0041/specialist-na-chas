@@ -1,5 +1,54 @@
 @import "tailwindcss";
 
+/* Голографический куб из оформления сайта «Через время к звёздам». */
+.portfolio-cube {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  margin: 12px 0 0 auto;
+  perspective: 550px;
+  pointer-events: none;
+  animation: portfolioCubeFloat 6s ease-in-out infinite;
+}
+.portfolio-cube-form {
+  position: relative;
+  display: block;
+  width: 70px;
+  height: 70px;
+  transform-style: preserve-3d;
+  animation: portfolioCubeTurn 18s ease-in-out infinite;
+}
+.portfolio-cube-form > i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(140,230,255,.85);
+  background: repeating-linear-gradient(35deg, transparent 0 18px, rgba(125,215,255,.15) 18px 20px), repeating-linear-gradient(125deg, rgba(40,125,185,.08) 0 20px, rgba(150,225,255,.18) 20px 22px);
+  box-shadow: inset 0 0 20px rgba(65,185,255,.25), 0 0 14px rgba(65,185,255,.2);
+  backface-visibility: visible;
+}
+.portfolio-cube-form > i:nth-child(1) { transform: translateZ(35px); }
+.portfolio-cube-form > i:nth-child(2) { transform: rotateY(180deg) translateZ(35px); }
+.portfolio-cube-form > i:nth-child(3) { transform: rotateY(90deg) translateZ(35px); }
+.portfolio-cube-form > i:nth-child(4) { transform: rotateY(-90deg) translateZ(35px); }
+.portfolio-cube-form > i:nth-child(5) { transform: rotateX(90deg) translateZ(35px); }
+.portfolio-cube-form > i:nth-child(6) { transform: rotateX(-90deg) translateZ(35px); }
+.portfolio-cube-core { position: absolute; left: 28px; top: 28px; width: 14px; height: 14px; border-radius: 50%; background: #f1fcff; box-shadow: 0 0 12px #fff, 0 0 28px #78ddff, 0 0 45px #329eea; }
+@keyframes portfolioCubeFloat { 0%, 100% { translate: 0 2px; } 50% { translate: 0 -3px; } }
+@keyframes portfolioCubeTurn { 0%, 100% { transform: rotateX(-20deg) rotateY(30deg) rotateZ(-5deg); } 50% { transform: rotateX(-32deg) rotateY(210deg) rotateZ(5deg); } }
+@media (min-width: 640px) {
+  .portfolio-cube { position: absolute; top: 105px; right: 12%; width: 135px; height: 135px; margin: 0; }
+  .portfolio-cube-form { scale: 1.35; }
+}
+@media (min-width: 1024px) { .portfolio-cube { top: -15px; right: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-cube, .portfolio-cube-form { animation: none; }
+  .portfolio-cube-form { transform: rotateX(-20deg) rotateY(30deg); }
+}
+.reduced-motion .portfolio-cube, .reduced-motion .portfolio-cube-form { animation: none; }
+.reduced-motion .portfolio-cube-form { transform: rotateX(-20deg) rotateY(30deg); }
+
 @theme {
   --font-display: "Unbounded", "Manrope", system-ui, sans-serif;
   --font-sans: "Manrope", system-ui, -apple-system, sans-serif;

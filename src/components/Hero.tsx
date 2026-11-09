@@ -36,7 +36,7 @@ export default function Hero() {
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 pb-14 pt-10 sm:px-6 md:pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:px-8 lg:pb-20 lg:pt-24">
         {/* ---- текст ---- */}
-        <div>
+        <div className="relative">
           <Reveal>
             <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-accent-400">
               <span className="flex items-center gap-2">
@@ -60,6 +60,12 @@ export default function Hero() {
               </span>
             </h1>
           </Reveal>
+
+          <div className="portfolio-cube" aria-hidden="true">
+            <span className="portfolio-cube-form">
+              <i /><i /><i /><i /><i /><i /><span className="portfolio-cube-core" />
+            </span>
+          </div>
 
           <Reveal delay={170}>
             <p className="mt-5 max-w-xl text-lg font-semibold text-fog-300 sm:text-xl">
