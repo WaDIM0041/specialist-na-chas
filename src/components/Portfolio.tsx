@@ -90,10 +90,11 @@ const CASES = [
     format: "Цифровой проект",
     image: "./images/project-digital.jpg",
     alt: "Цифровой проект: страница сайта и 3D-модель",
-    task: "Оживить страницу услуги и заранее показать результат работ клиенту.",
-    done: "Пример страницы и визуальных материалов.",
-    result: "Пример результата: страница цифрового проекта.",
-    media: "место для видеообзора или ссылки",
+    task: "Показать проект дома так, чтобы заказчик мог сам рассмотреть его с разных сторон.",
+    done: "Интерактивная модель, фасад и план на отдельном сайте.",
+    result: "Демонстрация «Север 01», которой можно поделиться по ссылке.",
+    media: "Открыть демонстрацию",
+    href: "./digital-project/index.html",
   },
 ];
 
@@ -137,10 +138,12 @@ export default function Portfolio() {
                           className="h-full w-full object-cover transition-transform duration-700 group-hover/img:scale-[1.04]"
                           loading="lazy"
                         />
-                        <span className="absolute bottom-2.5 left-2.5 inline-flex items-center gap-2 bg-ink-950/85 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fog-300 backdrop-blur-sm">
-                          <Play className="h-3 w-3 text-accent-400" />
-                          {c.media}
-                        </span>
+                        <a href={c.href} aria-label="Открыть демонстрацию «Север 01»" className="absolute inset-0 flex items-end p-2.5 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-accent-400">
+                          <span className="inline-flex items-center gap-2 bg-ink-950/85 px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fog-300 backdrop-blur-sm">
+                            <Play className="h-3 w-3 text-accent-400" />
+                            {c.media}
+                          </span>
+                        </a>
                       </div>
                     )}
                   </div>
@@ -160,13 +163,17 @@ export default function Portfolio() {
                     ))}
                   </dl>
 
-                  <div className="mt-5 flex items-center justify-between border-t border-line-soft px-5 py-3.5">
+                  {c.href ? (
+                    <a href={c.href} className="mt-5 flex items-center justify-between gap-2 border-t border-line-soft px-5 py-3.5 text-sm text-accent-300 hover:bg-ink-900 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent-400">
+                      {c.media}<ArrowRight className="h-4 w-4" aria-hidden />
+                    </a>
+                  ) : <div className="mt-5 flex items-center justify-between border-t border-line-soft px-5 py-3.5">
                     <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-fog-500">
                       <Link2 className="h-3.5 w-3.5" />
                       {c.media}
                     </span>
                     <ArrowRight className="h-4 w-4 text-fog-500 transition-all duration-300 group-hover/card:translate-x-1 group-hover/card:text-accent-400" aria-hidden />
-                  </div>
+                  </div>}
                 </article>
               </TickedCard>
             </Reveal>

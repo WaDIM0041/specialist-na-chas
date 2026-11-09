@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#060e18">
+  <meta name="description" content="Интерактивная презентация архитектурного проекта. Посмотрите дом в объёме, изучите фасад и планировку.">
+  <title>Север 01 — интерактивная презентация дома</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./model.js" defer></script>
+</head>
+<body>
+  <header class="bar wrap">
+    <a class="brand" href="../#работы"><span aria-hidden="true">◈</span> Специалист на час</a>
+    <a class="back" href="../#работы">← К портфолио</a>
+  </header>
+  <main class="wrap">
+    <section class="intro" aria-labelledby="title">
+      <div>
+        <p class="label"><span class="dot"></span> Демонстрационный проект / 01</p>
+        <h1 id="title">Север <span>01</span></h1>
+      </div>
+      <p class="lead">Интерактивная презентация загородного дома. Покрутите модель, рассмотрите фасад и загляните внутрь на плане.</p>
+    </section>
+
+    <section class="viewer" aria-label="Интерактивная модель дома">
+      <div class="viewer-head"><span><span class="dot"></span> Архитектурная модель</span><span>Лист А–01</span></div>
+      <div class="viewer-body">
+        <div class="scene" id="scene" tabindex="0" aria-label="Модель дома. Для поворота используйте стрелки" aria-describedby="help">
+          <div class="scene-top"><span>СЕВЕР / 01</span><span id="mode-id">AX / 01</span></div>
+          <svg id="drawing" viewBox="0 0 760 470" role="img" aria-label="Чертёж демонстрационного дома">
+            <defs><filter id="glow"><feGaussianBlur stdDeviation="3"/></filter></defs>
+            <g id="geometry"></g>
+          </svg>
+          <div class="scene-bottom"><span><span class="dot"></span> <span id="scene-status">Объёмная модель</span></span><span id="angle">—</span></div>
+        </div>
+        <div class="panel">
+          <p class="label">Режим просмотра</p>
+          <div class="views" role="group" aria-label="Режим просмотра модели">
+            <button type="button" data-mode="model" aria-pressed="true"><span>01</span> Объём</button>
+            <button type="button" data-mode="front" aria-pressed="false"><span>02</span> Фасад</button>
+            <button type="button" data-mode="plan" aria-pressed="false"><span>03</span> План</button>
+          </div>
+          <p class="panel-copy" id="mode-description" aria-live="polite">Обойдите дом вокруг, чтобы оценить форму крыши, вход и остекление.</p>
+          <div class="turn" id="turn-controls" role="group" aria-label="Поворот модели">
+            <button type="button" id="left" aria-label="Повернуть влево">←</button>
+            <button type="button" id="reset">Сбросить вид</button>
+            <button type="button" id="right" aria-label="Повернуть вправо">→</button>
+          </div>
+          <p class="hint" id="help">Потяните модель или нажмите стрелки.</p>
+          <dl class="spec"><div><dt>Габариты</dt><dd>12 × 8 м</dd></div><div><dt>Этажность</dt><dd>1 этаж</dd></div><div><dt>Тип</dt><dd>Концепция</dd></div></dl>
+        </div>
+      </div>
+      <noscript><p class="hint static">Для просмотра модели включите JavaScript. Ниже описано, что входит в такую презентацию.</p></noscript>
+    </section>
+
+    <section class="process" aria-labelledby="process-title">
+      <p class="label">От исходников к презентации</p>
+      <h2 id="process-title">Что можно показать заказчику</h2>
+      <div class="steps">
+        <article><span>01 / Исходники</span><h3>Задача и материалы</h3><p>Эскизы, планы или готовая модель. Определим, какие решения зритель должен увидеть в первую очередь.</p></article>
+        <article><span>02 / Визуализация</span><h3>Форма, фасад, план</h3><p>Соберём ракурсы и пояснения, чтобы заказчик мог сам рассмотреть важные детали.</p></article>
+        <article><span>03 / Сайт</span><h3>Ссылка для показа</h3><p>Оформим материалы в отдельную страницу, которую можно открыть с телефона или отправить клиенту.</p></article>
+      </div>
+    </section>
+
+    <section class="order" aria-labelledby="order-title">
+      <div><p class="label">Ваш проект</p><h2 id="order-title">Хотите показать свой объект так же?</h2><p>Опишите объект, какие материалы у вас есть и что важно показать заказчику.</p></div>
+      <a class="cta" href="../#контакты">Подготовить заявку <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+  <footer class="foot wrap"><span>Север 01 · демонстрационная концепция</span><a href="../#работы">Специалист на час ↗</a></footer>
+</body>
+</html>
