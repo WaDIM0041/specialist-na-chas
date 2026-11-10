@@ -67,6 +67,9 @@ const OFFLINE = [
   },
 ];
 
+// Временно скрытый блок: вернуть его можно, переключив значение на true.
+const SHOW_OFFLINE_FORMATS = false;
+
 export default function Services() {
   return (
     <section id="услуги" className="relative scroll-mt-20 py-20 md:py-28" aria-labelledby="services-title">
@@ -120,9 +123,9 @@ export default function Services() {
         </ul>
 
         <Reveal delay={120} className="mt-10 md:mt-12">
-          <article className="border border-line bg-ink-900/60 p-5 lg:p-6">
+          <article className="border border-line bg-ink-900/60 p-5 text-center lg:p-6">
             <h3 className="font-display text-lg font-semibold text-paper">Фасадные системы и структурное остекление</h3>
-            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-fog-300">
+            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-fog-300">
               Разработка фасадных систем и структурного остекления с нуля до сдачи объекта.
               Организация работ, руководство монтажниками и общение с заказчиком на всех этапах.
               Формат участия и выезд на объект обсуждаются отдельно.
@@ -130,35 +133,39 @@ export default function Services() {
           </article>
         </Reveal>
 
-        {/* два формата с выездом */}
-        <Reveal delay={120} className="mt-10 md:mt-12">
-          <div className="mb-4 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.24em] text-fog-500">
-            <MapPin className="h-3.5 w-3.5 text-demo-400" />
-            Офлайн-форматы · Санкт-Петербург · по договорённости
-          </div>
-        </Reveal>
-        <ul className="grid gap-4 md:grid-cols-2">
-          {OFFLINE.map((s, i) => (
-            <Reveal as="li" key={s.code} delay={i * 110}>
-              <article className="group relative flex h-full gap-5 border border-dashed border-demo-400/35 bg-gradient-to-br from-ink-900/70 to-ink-950 p-5 transition-colors duration-500 hover:border-demo-400/70 sm:p-6">
-                <span className="grid h-12 w-12 shrink-0 place-items-center border border-demo-400/40 bg-ink-950 text-demo-400">
-                  <s.icon className="h-5.5 w-5.5" strokeWidth={1.5} />
-                </span>
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <h3 className="font-display text-[16px] font-semibold text-paper">{s.title}</h3>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-fog-500">{s.code}</span>
-                  </div>
-                  <p className="mt-2.5 text-sm leading-relaxed text-fog-400">{s.text}</p>
-                  <p className="mt-4 inline-flex items-center gap-2 border border-demo-400/35 bg-demo-400/8 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-demo-400">
-                    <MapPin className="h-3 w-3" />
-                    {s.mode}
-                  </p>
-                </div>
-              </article>
+        {SHOW_OFFLINE_FORMATS && (
+          <>
+            {/* временно скрытые офлайн-форматы */}
+            <Reveal delay={120} className="mt-10 md:mt-12">
+              <div className="mb-4 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.24em] text-fog-500">
+                <MapPin className="h-3.5 w-3.5 text-demo-400" />
+                Офлайн-форматы · Санкт-Петербург · по договорённости
+              </div>
             </Reveal>
-          ))}
-        </ul>
+            <ul className="grid gap-4 md:grid-cols-2">
+              {OFFLINE.map((s, i) => (
+                <Reveal as="li" key={s.code} delay={i * 110}>
+                  <article className="group relative flex h-full gap-5 border border-dashed border-demo-400/35 bg-gradient-to-br from-ink-900/70 to-ink-950 p-5 transition-colors duration-500 hover:border-demo-400/70 sm:p-6">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center border border-demo-400/40 bg-ink-950 text-demo-400">
+                      <s.icon className="h-5.5 w-5.5" strokeWidth={1.5} />
+                    </span>
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <h3 className="font-display text-[16px] font-semibold text-paper">{s.title}</h3>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-fog-500">{s.code}</span>
+                      </div>
+                      <p className="mt-2.5 text-sm leading-relaxed text-fog-400">{s.text}</p>
+                      <p className="mt-4 inline-flex items-center gap-2 border border-demo-400/35 bg-demo-400/8 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-demo-400">
+                        <MapPin className="h-3 w-3" />
+                        {s.mode}
+                      </p>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
     </section>
   );
