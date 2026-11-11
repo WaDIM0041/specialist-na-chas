@@ -67,8 +67,8 @@ const OFFLINE = [
   },
 ];
 
-// Временно скрытый блок: вернуть его можно, переключив значение на true.
-const SHOW_OFFLINE_FORMATS = false;
+// Карточка бытового мастера временно скрыта.
+const SHOW_HANDYMAN = false;
 
 export default function Services() {
   return (
@@ -133,17 +133,17 @@ export default function Services() {
           </article>
         </Reveal>
 
-        {SHOW_OFFLINE_FORMATS && (
+        {
           <>
-            {/* временно скрытые офлайн-форматы */}
+            {/* Компьютерная помощь доступна удалённо и с выездом. */}
             <Reveal delay={120} className="mt-10 md:mt-12">
               <div className="mb-4 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.24em] text-fog-500">
                 <MapPin className="h-3.5 w-3.5 text-demo-400" />
-                Офлайн-форматы · Санкт-Петербург · по договорённости
+                Компьютерная помощь · удалённо или с выездом
               </div>
             </Reveal>
-            <ul className="grid gap-4 md:grid-cols-2">
-              {OFFLINE.map((s, i) => (
+            <ul className="grid gap-4">
+              {OFFLINE.filter((s) => SHOW_HANDYMAN || s.code !== "СПб-02").map((s, i) => (
                 <Reveal as="li" key={s.code} delay={i * 110}>
                   <article className="group relative flex h-full gap-5 border border-dashed border-demo-400/35 bg-gradient-to-br from-ink-900/70 to-ink-950 p-5 transition-colors duration-500 hover:border-demo-400/70 sm:p-6">
                     <span className="grid h-12 w-12 shrink-0 place-items-center border border-demo-400/40 bg-ink-950 text-demo-400">
@@ -165,7 +165,7 @@ export default function Services() {
               ))}
             </ul>
           </>
-        )}
+        }
       </div>
     </section>
   );
