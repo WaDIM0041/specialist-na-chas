@@ -1,18 +1,20 @@
 import { useRef, useState, type FormEvent } from "react";
 import {
   Send,
+  MessageCircleMore,
   Mail,
+  Phone,
   MapPin,
   Upload,
-  Info,
   Copy,
   Check,
   X,
   Clock,
   ArrowRight,
 } from "lucide-react";
-import { SectionHead, DemoTag, Meta } from "../lib/ui";
+import { SectionHead, Meta } from "../lib/ui";
 import { Reveal } from "../lib/motion";
+import { publicContacts } from "../lib/public-contacts";
 
 const KINDS = [
   "Чертежи и 3D",
@@ -26,6 +28,16 @@ const KINDS = [
 ];
 
 const CHANNELS = ["MAX", "Telegram", "ВКонтакте", "Звонок", "E-mail"];
+const contactRows = [
+  ...publicContacts.map(({ channel, value, href }) => ({
+    icon: channel === "Почта" ? Mail : channel === "Телефон" ? Phone : channel === "MAX" ? MessageCircleMore : Send,
+    label: channel,
+    value,
+    href,
+  })),
+  { icon: MapPin, label: "География", value: "Удалённо — везде; выезд — Санкт-Петербург", href: undefined },
+  { icon: Clock, label: "Режим", value: "Разовые задачи и регулярная помощь по расписанию", href: undefined },
+];
 
 type Format = "remote" | "visit";
 
@@ -66,7 +78,7 @@ export default function ContactForm() {
     if (Object.keys(errs).length > 0) return;
 
     const lines = [
-      "ЗАЯВКА · Специалист на час (черновик, демо-режим)",
+      "ЗАЯВКА · Специалист на час",
       `Вид помощи: ${kind}`,
       `Формат: ${effectiveFormat === "visit" ? `Выезд по СПб, район — ${district.trim()}` : "Удалённо"}`,
       `Описание: ${description.trim()}`,
@@ -103,86 +115,66 @@ export default function ContactForm() {
     "w-full border border-line bg-ink-950 px-4 py-3 text-sm text-paper placeholder:text-fog-500 transition-colors focus:border-accent-400/70 focus:outline-none";
 
   return (
-    <section id="контакты" className="relative scroll-mt-20 border-t border-line-soft bg-ink-900/30 py-20 md:py-28" aria-labelledby="contacts-title">
+    <section id="контакты" className="relative scroll-mt-20 border-t border-line-soft bg-ink-900/30 py-20 md:py-28" aria-label="Контакты">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHead
           index="04"
-          kicker="Контакты и заявка"
-          title="Отправить задачу"
-          note="Демонстрационная форма создаёт черновик заявки. Отправка и вложения пока не подключены."
+          kicker="Контакты"
+          title="Обсудить задачу"
+          note="Позвоните или напишите в удобном мессенджере."
         />
 
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
-          {/* левая колонка — каналы связи */}
-          <Reveal>
+          <div aria-labelledby="direct-contacts-title">
+            <h3 id="direct-contacts-title" className="mb-4 font-display text-xl font-semibold text-paper">
+              Связаться напрямую
+            </h3>
             <div className="space-y-3.5">
-              {[
-                { icon: Send, label: "MAX", value: "Контакт появится позже", demo: null, href: undefined },
-                {
-                  icon: Send,
-                  label: "Telegram",
-                  value: "Контакт появится позже",
-                  demo: "демо-ник",
-                  href: undefined,
-                },
-                { icon: Send, label: "ВКонтакте", value: "Контакт появится позже", demo: null, href: undefined },
-                { icon: Send, label: "Телефон", value: "Контакт появится позже", demo: null, href: undefined },
-                {
-                  icon: Mail,
-                  label: "Почта",
-                  value: "Контакт появится позже",
-                  demo: "демо-адрес",
-                  href: undefined,
-                },
-                {
-                  icon: MapPin,
-                  label: "География",
-                  value: "Удалённо — везде; выезд — Санкт-Петербург",
-                  demo: null,
-                },
-                {
-                  icon: Clock,
-                  label: "Режим",
-                  value: "Разовые задачи и регулярная помощь по расписанию",
-                  demo: null,
-                },
-              ].map((c) => (
-                <div key={c.label} className="flex items-center gap-4 border border-line bg-ink-950/70 px-5 py-4">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center border border-line bg-ink-900 text-accent-400">
-                    <c.icon className="h-4.5 w-4.5" strokeWidth={1.5} />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <Meta>{c.label}</Meta>
-                    <p className="mt-1 truncate text-sm font-semibold text-paper">
-                      {c.href ? (
-                        <a href={c.href} target="_blank" rel="noreferrer noopener" className="hover:text-accent-300">
-                          {c.value}
-                        </a>
-                      ) : (
-                        c.value
-                      )}
-                    </p>
-                  </div>
-                  {c.demo ? <DemoTag label={c.demo} /> : null}
-                </div>
-              ))}
-            </div>
+              {contactRows.map((c) => {
+                const rowClass = "flex min-h-16 items-center gap-3 border px-4 py-3 sm:gap-4 sm:px-5";
+                const content = (
+                  <>
+                    <span aria-hidden="true" className="grid h-10 w-10 shrink-0 place-items-center border border-line bg-ink-900 text-accent-400">
+                      <span className="contact-icon-motion" data-contact-icon={c.label}>
+                        {c.label === "ВКонтакте" ? <span className="font-sans text-sm font-bold tracking-tight">VK</span> : <c.icon className="h-4.5 w-4.5" strokeWidth={1.5} />}
+                      </span>
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <Meta className="text-fog-300">{c.label}</Meta>
+                      <span className={`mt-1 block break-words font-semibold ${c.href ? "text-base text-accent-300" : "text-sm text-paper"}`}>
+                        {c.value}
+                      </span>
+                    </span>
+                  </>
+                );
 
-            <div className="mt-6 flex gap-3.5 border border-demo-400/35 bg-demo-400/8 px-5 py-4">
-              <Info className="mt-0.5 h-4.5 w-4.5 shrink-0 text-demo-400" />
-              <p className="text-sm leading-relaxed text-fog-300">
-                <span className="font-semibold text-demo-400">Демонстрационный режим. </span>
-                Форма собирает текст заявки, но ничего не отправляет. Приём заявок заработает
-                после подключения рабочего контакта.
-              </p>
+                return c.href ? (
+                  <a
+                    key={c.label}
+                    href={c.href}
+                    target={c.href.startsWith("https://") ? "_blank" : undefined}
+                    rel="noopener noreferrer"
+                    className={`${rowClass} border-accent-400/45 bg-accent-500/8 transition-colors hover:border-accent-400 hover:bg-accent-500/16 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-400`}
+                  >
+                    {content}
+                    <ArrowRight aria-hidden="true" className="h-4 w-4 shrink-0 text-accent-300" />
+                  </a>
+                ) : (
+                  <div key={c.label} className={`${rowClass} border-line bg-ink-950/70`}>{content}</div>
+                );
+              })}
             </div>
-          </Reveal>
+          </div>
 
           {/* форма */}
           <Reveal delay={120}>
-            <form onSubmit={submit} className="relative border border-line bg-ink-950/80 p-6 sm:p-8" noValidate={false}>
+            <form onSubmit={submit} aria-labelledby="draft-form-title" className="relative border border-line bg-ink-950/80 p-6 sm:p-8" noValidate={false}>
               <span aria-hidden className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-accent-400" />
               <span aria-hidden className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-accent-400" />
+              <h3 id="draft-form-title" className="font-display text-xl font-semibold text-paper">Черновик заявки</h3>
+              <p className="mb-6 mt-2 text-sm leading-relaxed text-fog-300">
+                Соберите описание задачи, затем скопируйте его и отправьте в мессенджере.
+              </p>
 
               <div className="grid gap-5">
                 <div>
@@ -308,7 +300,7 @@ export default function ContactForm() {
                     className="flex cursor-pointer items-center justify-center gap-3 border border-dashed border-line bg-ink-900/50 px-4 py-6 text-sm text-fog-400 transition-colors hover:border-accent-400/50 hover:text-accent-300"
                   >
                     <Upload className="h-4.5 w-4.5" />
-                    {files.length ? "Добавить ещё файл" : "Выбрать файл (в демо не отправляется)"}
+                    {files.length ? "Добавить ещё файл" : "Добавить название файла в черновик"}
                   </label>
                   <input
                     id="f-file"
@@ -361,24 +353,27 @@ export default function ContactForm() {
               >
                 <p className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-300">
                   <Check className="h-4 w-4" />
-                  Черновик заявки собран — демо, ничего не отправлено
+                  Черновик заявки готов
                 </p>
-                <pre className="mt-4 max-h-56 overflow-auto whitespace-pre-wrap border border-line-soft bg-ink-900/70 p-4 font-mono text-[12px] leading-relaxed text-fog-300">
-                  {draft}
-                </pre>
-                <p className="mt-3 text-[13px] leading-relaxed text-fog-400">
-                  Скопируйте текст и отправьте удобным каналом — после подключения рабочего контакта
-                  эта форма начнёт принимать заявки настоящим образом.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2.5">
+                <div className="mt-4 border border-line-soft bg-ink-900/70 p-4">
                   <button
                     type="button"
                     onClick={copyDraft}
-                    className="inline-flex items-center gap-2 border border-accent-400/60 bg-accent-500/12 px-5 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-300 transition-colors hover:bg-accent-500/25"
+                    className="ml-auto flex min-h-11 items-center gap-2 border border-accent-400/60 bg-accent-500/12 px-4 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-300 transition-colors hover:bg-accent-500/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400"
                   >
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                     {copied ? "Скопировано" : "Скопировать текст"}
                   </button>
+                  <pre className="mt-3 max-h-56 overflow-auto whitespace-pre-wrap break-words font-mono text-[12px] leading-relaxed text-fog-300">
+                    {draft}
+                  </pre>
+                </div>
+                {publicContacts.length > 0 && (
+                  <p className="mt-3 text-[13px] leading-relaxed text-fog-400">
+                    Отправьте текст в мессенджере и приложите файлы в переписке.
+                  </p>
+                )}
+                <div className="mt-4 flex flex-wrap gap-2.5">
                   <button
                     type="button"
                     onClick={resetAll}

@@ -1,5 +1,6 @@
 import { ArrowUp, Crosshair } from "lucide-react";
 import { NAV } from "./Header";
+import { publicContacts } from "../lib/public-contacts";
 
 export default function Footer() {
   return (
@@ -37,9 +38,26 @@ export default function Footer() {
 
           <div className="max-w-xs">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-fog-500">На связи</p>
-            <p className="mt-4 text-sm leading-relaxed text-fog-400">
-              Контактные данные будут добавлены позднее.
-            </p>
+            {publicContacts.length > 0 && (
+              <ul className="mt-4 space-y-2.5">
+                {publicContacts.map(({ channel, value, href }) => (
+                  <li key={channel}>
+                    {href ? (
+                      <a
+                        href={href}
+                        target={href.startsWith("https://") ? "_blank" : undefined}
+                        rel="noreferrer noopener"
+                        className="inline-block break-words text-sm text-fog-300 underline decoration-accent-400/40 underline-offset-4 hover:text-accent-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400"
+                      >
+                        {channel} · {value}
+                      </a>
+                    ) : (
+                      <span className="text-sm text-fog-300">{channel} · {value}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
             <a
               href="#top"
               className="footer-back-to-top mt-6 inline-flex items-center gap-2 border border-line px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.16em] text-fog-300 transition-colors hover:border-accent-400/60 hover:text-accent-300"
