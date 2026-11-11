@@ -55,7 +55,7 @@ export default function Footer() {
           <p>Вычерчено в цифровой мастерской · лист 1 из 1</p>
         </div>
       </div>
-      <div className="border-t border-line-soft px-3 pt-5 sm:px-6">
+      <div className="mx-auto max-w-7xl border-t border-line-soft px-4 pt-5 sm:px-6 lg:px-8">
         <svg
           viewBox="0 0 1200 112"
           role="img"
