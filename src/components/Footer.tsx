@@ -1,4 +1,4 @@
-import { ArrowUp, Crosshair } from "lucide-react";
+import { ArrowUp, Crosshair, Phone, MessageCircle, Send, Users, Mail } from "lucide-react";
 import { NAV } from "./Header";
 import { publicContacts } from "../lib/public-contacts";
 
@@ -36,12 +36,14 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="max-w-xs">
+          <div className="max-w-xs md:mr-12 lg:mr-20">
             <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-fog-500">На связи</p>
             {publicContacts.length > 0 && (
               <ul className="mt-4 space-y-2.5">
-                {publicContacts.map(({ channel, value, href }) => (
-                  <li key={channel}>
+                {publicContacts.map(({ channel, value, href }) => {
+                  const Icon = channel === "Телефон" ? Phone : channel === "Telegram" ? Send : channel === "ВКонтакте" ? Users : channel === "Почта" ? Mail : MessageCircle;
+                  return <li key={channel} className="group flex items-center gap-3">
+                    <span aria-hidden="true" className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-accent-400/30 bg-accent-400/5 text-accent-300 transition duration-300 group-hover:scale-110 group-hover:border-accent-300 group-hover:bg-accent-400/20 motion-reduce:transition-none"><Icon className="h-4 w-4" /></span>
                     {href ? (
                       <a
                         href={href}
@@ -54,8 +56,8 @@ export default function Footer() {
                     ) : (
                       <span className="text-sm text-fog-300">{channel} · {value}</span>
                     )}
-                  </li>
-                ))}
+                  </li>;
+                })}
               </ul>
             )}
             <a

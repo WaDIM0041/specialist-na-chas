@@ -1,11 +1,12 @@
 import { MotionProvider } from "./lib/motion";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import Services from "./components/Services";
+import Services, { ComputerHelp } from "./components/Services";
 import Portfolio from "./components/Portfolio";
 import About from "./components/About";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
+import HouseSketch from "./components/HouseSketch";
 
 export default function App() {
   return (
@@ -28,9 +29,11 @@ export default function App() {
       <main id="main">
         <Hero />
         <Services />
+        <HouseSketch />
         <Portfolio />
         <About />
         <ContactForm />
+        <ComputerHelp />
       </main>
       <Footer />
     </MotionProvider>

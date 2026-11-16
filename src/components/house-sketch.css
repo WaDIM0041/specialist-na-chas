@@ -1,0 +1,20 @@
+.house-section{padding:80px 24px;border-top:1px solid #172a37}
+.house-wrap{max-width:1280px;margin:auto}
+.studio-house{display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:clamp(26px,5vw,64px);padding:clamp(24px,4vw,56px);border:1px solid #8eb6ae33;border-radius:24px;background:linear-gradient(125deg,#10302c66,#13182655)}
+.studio-house p{max-width:65ch;color:#b4c7c3;line-height:1.75}
+.studio-house h2{font-size:clamp(26px,3vw,38px);font-weight:700;line-height:1.2;margin:15px 0 20px}
+.studio-house .house-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#3bd9c2}
+.studio-process{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:10px;margin:28px 0}
+.studio-process li{padding:9px 12px;border:1px solid #8eb6ae33;border-radius:8px;font-size:14px}
+.studio-process li:not(:last-child)::after{content:' →';color:#3bd9c2;margin-left:8px}
+.house-button{display:inline-flex;gap:12px;padding:12px 18px;background:#3bd9c2;color:#071a19;font-weight:700;border-radius:6px}
+.studio-video{position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid #90bbb45c;border-radius:16px;background:#081719}
+.studio-video video{width:100%;height:100%;object-fit:cover;display:block}
+.studio-video-copy{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;background:rgba(4,19,22,.88);opacity:1;transition:opacity 1s;pointer-events:none}
+.studio-video-copy h3{margin:0 0 12px}.studio-video-copy p{margin:0;color:#d3e4df;font-size:14px;line-height:1.5}
+.studio-video.is-playing .studio-video-copy{opacity:0}
+.studio-video.is-revealing [data-video-title] span{display:inline-block;white-space:pre;animation:house-letter-in .45s backwards}
+@keyframes house-letter-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){.studio-house{grid-template-columns:1fr}}
+@media(max-width:560px){.studio-house{padding:24px 20px}}
+@media(prefers-reduced-motion:reduce){.studio-video-copy{transition:none}.studio-video.is-revealing [data-video-title] span{animation:none}}

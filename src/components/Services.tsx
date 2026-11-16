@@ -123,15 +123,25 @@ export default function Services() {
         </ul>
 
         <Reveal delay={120} className="mt-10 md:mt-12">
-          <article className="border border-line bg-ink-900/60 p-5 text-center lg:p-6">
-            <h3 className="font-display text-lg font-semibold text-paper">Фасадные системы и структурное остекление</h3>
-            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-fog-300">
-              Разработка фасадных систем и структурного остекления с нуля до сдачи объекта.
-              Организация работ, руководство монтажниками и общение с заказчиком на всех этапах.
-              Формат участия и выезд на объект обсуждаются отдельно.
-            </p>
+          <article className="overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-[#173541] via-[#0d1720] to-[#08121a]">
+            <div className="p-6 sm:p-8 lg:px-10 lg:py-8">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent-300">Инженерная практика · фасады</p>
+                <h3 className="mt-6 font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">Фасады, <span className="text-accent-300">структурное остекление</span></h3>
+                <p className="mt-4 text-sm leading-relaxed text-fog-400">Профессиональный путь в фасадных системах — от монтажника до руководителя. Опыт включает разработку и корректировку чертежей и технических решений, организацию монтажа и руководство работами.</p>
+                <p className="mt-4 text-sm leading-relaxed text-fog-400">Опыт работы с вентилируемыми фасадами и структурным остеклением: сопровождение работ, взаимодействие с заказчиками и координация подрядчиков, в том числе совместная работа с монтажными бригадами из Китая.</p>
+                <p className="mt-6 text-sm text-accent-300">Монтаж → AutoCAD → Управление</p>
+            </div>
+            <div className="flex flex-col gap-5 border-t border-line p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between"><div><h4 className="font-display text-lg font-semibold text-paper">Чем могу помочь</h4><div className="mt-3 flex flex-wrap gap-2">{["Фасадные решения", "Чертежи и узлы", "AutoCAD / ППР", "Организация монтажа", "Координация подрядчиков"].map(item => <span key={item} className="rounded border border-line px-3 py-2 text-xs text-fog-300">{item}</span>)}</div></div><a className="inline-flex shrink-0 items-center justify-center gap-3 rounded bg-accent-400 px-5 py-3 text-sm font-semibold text-ink-950" href="https://t.me/Wadim_8884" target="_blank" rel="noopener noreferrer">Обсудить фасадный проект ↗</a></div>
           </article>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+export function ComputerHelp() {
+  return <section className="border-t border-line-soft py-12"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
 
         {
           <>
@@ -166,7 +176,5 @@ export default function Services() {
             </ul>
           </>
         }
-      </div>
-    </section>
-  );
+  </div></section>;
 }
