@@ -108,7 +108,6 @@ export default function Footer() {
             </svg>
             <span>Другие проекты AK Studio — annakam.ru</span>
           </a>
-          <a href="https://wadim0041.github.io/annakam-music-site/" target="_blank" rel="noopener noreferrer" className="text-fog-300 underline decoration-accent-400/40 underline-offset-4 hover:text-accent-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400">Музыка и клипы AnnaKam Music Studio</a>
         </div>
       </div>
     </footer>
