@@ -7,7 +7,7 @@ import { useMotion } from "../lib/motion";
 /*  затем лист «наклоняется», и стены поднимаются в объёмную модель.   */
 /* ------------------------------------------------------------------ */
 
-const DUR = [3200, 3200, 4400, 700]; // длительности стадий: эскиз, чертёж, модель, затухание
+const DUR = [3200, 3200, 4400, 5000, 700]; // эскиз, чертёж, модель, визуализация, затухание
 const FLAT = "translate(148px, 88px)";
 const ISO = "matrix(0.5889 0.34 -0.5889 0.34 262 78)";
 
@@ -32,6 +32,7 @@ const STAGE_META = [
   { label: "Исходник · эскиз", step: "Эскиз", hint: "получен от заказчика" },
   { label: "Вычерчивание · М 1:50", step: "Чертёж", hint: "размеры, оси, рамка" },
   { label: "Объём · h 2 700", step: "Модель 3D", hint: "объём для проверки" },
+  { label: "Визуализация · 3D-дизайн", step: "3D-дизайн", hint: "дом и ландшафт" },
 ];
 
 /** Одна «отрисовывающаяся» линия. */
@@ -67,17 +68,24 @@ function L({
 export default function BlueprintScene() {
   const { reduced } = useMotion();
   const [stage, setStage] = useState(0);
+  const [manualStage, setManualStage] = useState<number | null>(null);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || manualStage !== null) return;
     const t = window.setTimeout(
-      () => setStage((s) => (s + 1) % 4),
+      () => setStage((s) => (s + 1) % 5),
       DUR[stage],
     );
     return () => window.clearTimeout(t);
-  }, [stage, reduced]);
+  }, [stage, reduced, manualStage]);
 
-  const visual = reduced ? 1 : stage === 3 ? 2 : stage; // 3 — стадия затухания перед циклом
+  useEffect(() => {
+    if (manualStage === null || reduced) return;
+    const t = window.setTimeout(() => { setStage((manualStage + 1) % 4); setManualStage(null); }, DUR[manualStage]);
+    return () => window.clearTimeout(t);
+  }, [manualStage, reduced]);
+
+  const visual = manualStage ?? (reduced ? 1 : stage === 4 ? 3 : stage);
   const meta = STAGE_META[visual];
 
   return (
@@ -85,7 +93,7 @@ export default function BlueprintScene() {
       <svg
         viewBox="0 0 560 440"
         role="img"
-        aria-label="Анимация процесса: карандашный эскиз превращается в точный чертёж, затем стены поднимаются в объёмную 3D-модель"
+        aria-label="Анимация процесса: эскиз, чертёж, 3D-модель и визуализация дома с ландшафтом"
         className="block h-auto w-full cursor-crosshair select-none"
       >
         <defs>
@@ -151,13 +159,13 @@ export default function BlueprintScene() {
         <g fontFamily="JetBrains Mono, monospace">
           <circle cx="34" cy="410" r="3" fill="#57d6ff" className={reduced ? "" : "animate-blink"} />
           <text x="44" y="414" fontSize="9" fill="#8ba2bd" letterSpacing="1.5">
-            {reduced ? "СТАТИЧНЫЙ РЕЖИМ · АНИМАЦИЯ ВЫКЛЮЧЕНА" : `ОБРАБОТКА · ШАГ ${visual + 1}/3`}
+            {reduced ? "СТАТИЧНЫЙ РЕЖИМ · АНИМАЦИЯ ВЫКЛЮЧЕНА" : `ОБРАБОТКА · ШАГ ${visual + 1}/4`}
           </text>
           <text x="34" y="430" fontSize="8" fill="#55677d" letterSpacing="1.5">X 258.40 / Y 194.20 · UTC+3 СПБ</text>
         </g>
 
         {/* контент стадий (затухает в конце цикла) */}
-        <g style={{ opacity: stage === 3 || reduced ? (reduced ? 1 : 0) : 1, transition: "opacity 0.6s ease" }}>
+        <g style={{ opacity: manualStage !== null || stage !== 4 || reduced ? 1 : 0, transition: "opacity 0.6s ease" }}>
           {/* ---------- ЭСКИЗ ---------- */}
           {(visual === 0 || visual === 1) && (
             <g
@@ -304,17 +312,20 @@ export default function BlueprintScene() {
         {!reduced && (
           <rect key={`scan-${stage}`} className="bp-scan" x="16" y="16" width="80" height="408" fill="url(#bp-scan)" opacity="0.8" />
         )}
+        {visual === 3 && <g className="bp-fade-in" style={{ opacity: manualStage !== null || stage !== 4 ? 1 : 0, transition: "opacity 0.6s ease" }}><image href="./images/house-design.png" x="32" y="72" width="496" height="279" preserveAspectRatio="xMidYMid slice" /><rect x="32" y="72" width="496" height="279" fill="none" stroke="rgba(87,214,255,0.65)" /><rect x="32" y="328" width="200" height="23" fill="#070d18" fillOpacity=".88" /><text x="42" y="344" fill="#9ae6ff" fontSize="9" letterSpacing="1">3D-ДИЗАЙН · ДОМ И ЛАНДШАФТ</text></g>}
       </svg>
 
       {/* шаги под листом */}
-      <figcaption id="bp-caption" className="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+      <figcaption id="bp-caption" className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
         {STAGE_META.map((s, i) => {
-          const active = reduced ? i === 1 : visual === i && stage !== 3;
+          const active = visual === i && (manualStage !== null || reduced || stage !== 4);
           return (
-            <div
+            <button
               key={s.step}
-              className={`border-t pt-2.5 transition-colors duration-500 ${active ? "border-accent-400" : "border-line"}`}
-              aria-current={active ? "step" : undefined}
+              type="button"
+              onClick={() => { setStage(i); setManualStage(i); }}
+              className={`group cursor-pointer border-t px-1 pt-2.5 text-left transition-colors duration-300 hover:border-accent-300 hover:bg-accent-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400 ${active ? "border-accent-400" : "border-line"}`}
+              aria-pressed={active}
             >
               <div className="flex items-baseline justify-between gap-2">
                 <span className={`font-mono text-[10px] uppercase tracking-[0.2em] ${active ? "text-accent-400" : "text-fog-500"}`}>
@@ -324,7 +335,7 @@ export default function BlueprintScene() {
                   {s.step}
                 </span>
               </div>
-              <p className="mt-1 hidden font-mono text-[10px] text-fog-500 sm:block">{s.hint}</p>
+              <span className="mt-1 hidden font-mono text-[10px] text-fog-500 group-hover:text-fog-300 sm:block">{s.hint}</span>
               <div className="mt-2 h-0.5 overflow-hidden rounded bg-ink-800">
                 {active && !reduced ? (
                   <div
@@ -336,7 +347,7 @@ export default function BlueprintScene() {
                   <div className={`h-full w-full origin-left ${active ? "bg-accent-400" : "bg-transparent"}`} />
                 )}
               </div>
-            </div>
+            </button>
           );
         })}
       </figcaption>
