@@ -69,21 +69,31 @@ export default function BlueprintScene() {
   const { reduced } = useMotion();
   const [stage, setStage] = useState(0);
   const [manualStage, setManualStage] = useState<number | null>(null);
+  const [designReady, setDesignReady] = useState(false);
 
   useEffect(() => {
-    if (reduced || manualStage !== null) return;
+    let active = true;
+    const img = new Image();
+    img.src = "./images/house-design-optimized.webp";
+    const ready = () => { if (active) setDesignReady(true); };
+    img.decode().then(ready).catch(ready);
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (reduced || manualStage !== null || (stage === 2 && !designReady)) return;
     const t = window.setTimeout(
       () => setStage((s) => (s + 1) % 5),
       DUR[stage],
     );
     return () => window.clearTimeout(t);
-  }, [stage, reduced, manualStage]);
+  }, [stage, reduced, manualStage, designReady]);
 
   useEffect(() => {
-    if (manualStage === null || reduced) return;
+    if (manualStage === null || reduced || (manualStage === 2 && !designReady)) return;
     const t = window.setTimeout(() => { setStage((manualStage + 1) % 4); setManualStage(null); }, DUR[manualStage]);
     return () => window.clearTimeout(t);
-  }, [manualStage, reduced]);
+  }, [manualStage, reduced, designReady]);
 
   const visual = manualStage ?? (reduced ? 1 : stage === 4 ? 3 : stage);
   const meta = STAGE_META[visual];
@@ -312,7 +322,7 @@ export default function BlueprintScene() {
         {!reduced && (
           <rect key={`scan-${stage}`} className="bp-scan" x="16" y="16" width="80" height="408" fill="url(#bp-scan)" opacity="0.8" />
         )}
-        {visual === 3 && <g className="bp-fade-in" style={{ opacity: manualStage !== null || stage !== 4 ? 1 : 0, transition: "opacity 0.6s ease" }}><image href="./images/house-design.png" x="32" y="72" width="496" height="279" preserveAspectRatio="xMidYMid slice" /><rect x="32" y="72" width="496" height="279" fill="none" stroke="rgba(87,214,255,0.65)" /><rect x="32" y="328" width="200" height="23" fill="#070d18" fillOpacity=".88" /><text x="42" y="344" fill="#9ae6ff" fontSize="9" letterSpacing="1">3D-ДИЗАЙН · ДОМ И ЛАНДШАФТ</text></g>}
+        {visual === 3 && <g className="bp-fade-in" style={{ opacity: manualStage !== null || stage !== 4 ? 1 : 0, transition: "opacity 0.6s ease" }}><image href="./images/house-design-optimized.webp" x="32" y="72" width="496" height="279" preserveAspectRatio="xMidYMid slice" /><rect x="32" y="72" width="496" height="279" fill="none" stroke="rgba(87,214,255,0.65)" /><rect x="32" y="328" width="200" height="23" fill="#070d18" fillOpacity=".88" /><text x="42" y="344" fill="#9ae6ff" fontSize="9" letterSpacing="1">3D-ДИЗАЙН · ДОМ И ЛАНДШАФТ</text></g>}
       </svg>
 
       {/* шаги под листом */}
@@ -323,6 +333,7 @@ export default function BlueprintScene() {
             <button
               key={s.step}
               type="button"
+              disabled={i === 3 && !designReady}
               onClick={() => { setStage(i); setManualStage(i); }}
               className={`group cursor-pointer border-t px-1 pt-2.5 text-left transition-colors duration-300 hover:border-accent-300 hover:bg-accent-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent-400 ${active ? "border-accent-400" : "border-line"}`}
               aria-pressed={active}
