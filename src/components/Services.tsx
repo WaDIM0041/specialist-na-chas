@@ -7,9 +7,11 @@ import {
   Wrench,
   ArrowRight,
   MapPin,
+  Sparkles,
 } from "lucide-react";
 import { SectionHead, TickedCard, Meta } from "../lib/ui";
 import { Reveal } from "../lib/motion";
+import HouseSketch from "./HouseSketch";
 
 const REMOTE = [
   {
@@ -48,6 +50,15 @@ const REMOTE = [
     result: "Сводная таблица с различиями в предложениях",
     tags: ["XLSX", "DOCX", "PDF"],
   },
+  {
+    icon: Sparkles,
+    code: "С-05",
+    title: "Настройка ИИ и обучение",
+    text: "Помогу подобрать и настроить ИИ под ваши рабочие задачи или проект. На вашем примере объясню, как сформулировать запрос, проверить ответ и доработать результат. Вместе настроим рабочий процесс, который вы сможете повторить самостоятельно.",
+    task: "«Хочу использовать ИИ в работе, но не знаю, с чего начать»",
+    result: "Настроенный инструмент, готовые запросы для ваших задач и пошаговая инструкция",
+    tags: ["Настройка ИИ", "Обучение", "Рабочие задачи"],
+  },
 ];
 
 const OFFLINE = [
@@ -81,10 +92,9 @@ export default function Services() {
           note="Удалённые задачи, проектные работы и помощь с выездом по договорённости."
         />
 
-        {/* четыре удалённые карточки */}
-        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {REMOTE.map((s, i) => (
-            <Reveal as="li" key={s.code} delay={i * 90}>
+            <Reveal as="li" key={s.code} delay={i * 90} className={s.code === "С-05" ? "sm:col-span-2" : undefined}>
               <TickedCard className="h-full">
                 <article className="flex h-full flex-col border border-line bg-ink-900/60 p-5 transition-colors duration-500 group-hover/card:border-accent-400/40 group-hover/card:bg-ink-850 lg:p-6">
                   <div className="flex items-start justify-between gap-3">
@@ -134,23 +144,25 @@ export default function Services() {
             <div className="flex flex-col gap-5 border-t border-line p-6 sm:p-8 lg:flex-row lg:items-end lg:justify-between"><div><h4 className="font-display text-lg font-semibold text-paper">Чем могу помочь</h4><div className="mt-3 flex flex-wrap gap-2">{["Фасадные решения", "Чертежи и узлы", "AutoCAD / ППР", "Организация монтажа", "Координация подрядчиков"].map(item => <span key={item} className="rounded border border-line px-3 py-2 text-xs text-fog-300">{item}</span>)}</div></div><a className="inline-flex shrink-0 items-center justify-center gap-3 rounded bg-accent-400 px-5 py-3 text-sm font-semibold text-ink-950" href="https://t.me/Wadim_8884" target="_blank" rel="noopener noreferrer">Обсудить фасадный проект ↗</a></div>
           </article>
         </Reveal>
+        <ComputerHelp />
       </div>
+      <HouseSketch />
     </section>
   );
 }
 
-export function ComputerHelp() {
-  return <section className="border-t border-line-soft py-12"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+function ComputerHelp() {
+  return <section aria-labelledby="computer-help-title">
 
 
         {
           <>
             {/* Компьютерная помощь доступна удалённо и с выездом. */}
             <Reveal delay={120} className="mt-10 md:mt-12">
-              <div className="mb-4 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.24em] text-fog-500">
+              <h3 id="computer-help-title" className="mb-4 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.24em] text-fog-500">
                 <MapPin className="h-3.5 w-3.5 text-demo-400" />
                 Компьютерная помощь · удалённо или с выездом
-              </div>
+              </h3>
             </Reveal>
             <ul className="grid gap-4">
               {OFFLINE.filter((s) => SHOW_HANDYMAN || s.code !== "СПб-02").map((s, i) => (
@@ -161,7 +173,7 @@ export function ComputerHelp() {
                     </span>
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                        <h3 className="font-display text-[16px] font-semibold text-paper">{s.title}</h3>
+                        <h4 className="font-display text-[16px] font-semibold text-paper">{s.title}</h4>
                         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-fog-500">{s.code}</span>
                       </div>
                       <p className="mt-2.5 text-sm leading-relaxed text-fog-400">{s.text}</p>
@@ -176,5 +188,5 @@ export function ComputerHelp() {
             </ul>
           </>
         }
-  </div></section>;
+  </section>;
 }
