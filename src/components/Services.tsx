@@ -84,6 +84,7 @@ const SHOW_HANDYMAN = false;
 export default function Services() {
   return (
     <section id="услуги" className="relative scroll-mt-20 py-20 md:py-28" aria-labelledby="services-title">
+      <HouseSketch />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHead
           index="01"
@@ -146,7 +147,6 @@ export default function Services() {
         </Reveal>
         <ComputerHelp />
       </div>
-      <HouseSketch />
     </section>
   );
 }
